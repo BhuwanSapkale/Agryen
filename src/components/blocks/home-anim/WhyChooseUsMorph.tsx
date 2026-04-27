@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useRef } from "react";
-import gsap from "gsap-trial";
-import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
-import { MorphSVGPlugin } from "gsap-trial/MorphSVGPlugin";
-import { Observer } from "gsap-trial/Observer";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MorphSVGPlugin } from "gsap/MorphSVGPlugin";
+import { Observer } from "gsap/Observer";
 import { useGSAP } from "@gsap/react";
 import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";

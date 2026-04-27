@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useEffect } from "react";
-import gsap from "gsap-trial";
-import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ReactLenis, useLenis } from "lenis/react";
 import { usePathname } from "next/navigation";
 

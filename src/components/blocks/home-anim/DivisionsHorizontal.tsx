@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import gsap from "gsap-trial";
-import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 import { ArrowRight, Cpu, Sun, Building, Pill, HomeIcon } from "lucide-react";

@@ -3,8 +3,8 @@
 import { useRef } from "react";
 import { Button } from "@/components/ui/button";
 import { Mail, Phone, MapPin } from "lucide-react";
-import gsap from "gsap-trial";
-import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import { ScrollingTextLoop } from "@/components/blocks/home-anim/ScrollingTextLoop";
 

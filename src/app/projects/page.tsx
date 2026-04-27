@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef, useEffect } from "react";
-import gsap from "gsap-trial";
-import { Flip } from "gsap-trial/Flip";
+import gsap from "gsap";
+import { Flip } from "gsap/Flip";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(Flip);

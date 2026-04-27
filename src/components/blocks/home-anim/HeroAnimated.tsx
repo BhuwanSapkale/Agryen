@@ -1,10 +1,10 @@
 "use client";
 
 import React, { useRef } from "react";
-import gsap from "gsap-trial";
-import { Observer } from "gsap-trial/Observer";
-import { SplitText } from "gsap-trial/SplitText";
-import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
+import gsap from "gsap";
+import { Observer } from "gsap/Observer";
+import { SplitText } from "gsap/SplitText";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {

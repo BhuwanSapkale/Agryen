@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useRef } from "react";
-import gsap from "gsap-trial";
-import { Observer } from "gsap-trial/Observer";
+import gsap from "gsap";
+import { Observer } from "gsap/Observer";
 import { useGSAP } from "@gsap/react";
 
 import { Button } from "@/components/ui/button";
