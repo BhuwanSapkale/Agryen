@@ -38,14 +38,13 @@ export default function HowWeWorkPage() {
       gsap.from(card, {
         scrollTrigger: {
           trigger: card,
-          start: "top 85%",
+          start: "top 95%",
           toggleActions: "play none none reverse"
         },
-        scale: 0.9,
-        y: 60,
+        y: 30,
         opacity: 0,
-        duration: 0.7,
-        ease: "back.out(1.2)"
+        duration: 0.6,
+        ease: "power2.out"
       });
     });
 
@@ -78,7 +77,7 @@ export default function HowWeWorkPage() {
 
     setTimeout(() => {
       ScrollTrigger.refresh();
-    }, 100);
+    }, 500);
 
   }, { scope: containerRef });
 
@@ -99,19 +98,19 @@ export default function HowWeWorkPage() {
       </section>
 
       {/* 2. Timeline Flow */}
-      <section className="py-32 bg-secondary/20 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672')] bg-cover bg-fixed bg-center relative">
+      <section className="py-32 bg-secondary/20 bg-[url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2672')] bg-cover bg-center relative">
         <div className="absolute inset-0 bg-black/90 backdrop-blur-sm"></div>
         <div className="max-w-3xl mx-auto px-4 relative z-10">
           <div className="space-y-4">
             {steps.map((step, i) => (
               <div key={i} className="flex flex-col items-center">
-                <div className="step-card w-full bg-white/95 border border-primary/20 rounded-3xl p-8 flex items-center shadow-2xl backdrop-blur-md hover:bg-white hover:border-primary/50 transition-all duration-300">
-                  <div className="bg-primary text-black border border-black w-20 h-20 rounded-full flex items-center justify-center font-black text-3xl flex-shrink-0 mr-8 shadow-[0_0_15px_rgba(172,146,95,0.3)]">
+                <div className="step-card w-full bg-white/95 border border-primary/20 rounded-3xl p-8 flex flex-col md:flex-row items-center md:items-start shadow-2xl backdrop-blur-md hover:bg-white hover:border-primary/50 transition-all duration-300 text-center md:text-left will-change-[transform,opacity]">
+                  <div className="bg-primary text-black border border-black w-20 h-20 rounded-full flex items-center justify-center font-black text-3xl flex-shrink-0 mb-6 md:mb-0 md:mr-8 shadow-[0_0_15px_rgba(172,146,95,0.3)]">
                     {i + 1}
                   </div>
-                  <div>
-                    <h3 className="text-3xl font-black mb-3 tracking-tight text-black uppercase">{step.name}</h3>
-                    <p className="text-lg text-black/70 font-medium">{step.desc}</p>
+                  <div className="flex-1">
+                    <h3 className="text-2xl md:text-3xl font-black mb-3 tracking-tight text-black uppercase">{step.name}</h3>
+                    <p className="text-base md:text-lg text-black/70 font-medium">{step.desc}</p>
                   </div>
                 </div>
                 {i < steps.length - 1 && (

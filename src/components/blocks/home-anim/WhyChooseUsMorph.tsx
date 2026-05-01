@@ -121,7 +121,7 @@ export function WhyChooseUsMorph() {
     <div ref={containerRef} className="flex flex-col w-full relative bg-background">
       
       {/* 1. SCROLLING MARQUEE (Merged Native Component) */}
-      <section className="pt-32 pb-48 bg-secondary text-white flex flex-col items-center justify-center -mb-8 relative z-20">
+      <section className="pt-32 pb-16 bg-secondary text-white flex flex-col items-center justify-center relative z-20">
         <div className="scrolling-text w-full overflow-hidden flex whitespace-nowrap mb-16 cursor-default">
           <div className="rail flex items-center">
             <h4 className="text-6xl md:text-9xl font-black uppercase text-transparent tracking-tighter mx-4" style={{ WebkitTextStroke: "2px rgba(255,255,255,0.3)" }}>Ready To Work With Us? • </h4>
@@ -133,11 +133,11 @@ export function WhyChooseUsMorph() {
           </div>
         </div>
 
-        <div className="flex gap-6 z-10 relative">
-          <a href="/contact" className="inline-flex items-center justify-center h-14 px-8 text-lg bg-white text-black hover:bg-white/90 rounded-full font-black uppercase shadow-xl transition-transform hover:scale-105">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-6 z-10 relative w-full md:w-auto px-4 md:px-0">
+          <a href="/contact" className="w-full md:w-auto inline-flex items-center justify-center h-14 px-8 text-lg bg-white text-black hover:bg-white/90 rounded-full font-black uppercase shadow-xl transition-transform hover:scale-105 text-center">
             Contact Us Today
           </a>
-          <a href="/divisions" className="inline-flex items-center justify-center h-14 px-8 text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-full font-black uppercase transition-all hover:scale-105">
+          <a href="/divisions" className="w-full md:w-auto inline-flex items-center justify-center h-14 px-8 text-lg bg-transparent border-2 border-white text-white hover:bg-white/10 rounded-full font-black uppercase transition-all hover:scale-105 text-center">
             Explore Services
           </a>
         </div>
@@ -150,7 +150,7 @@ export function WhyChooseUsMorph() {
           id="footer-img" 
           xmlns="http://www.w3.org/2000/svg" 
           viewBox="0 0 2278 683"
-          className="w-full h-full text-foreground fill-current -mb-1 block drop-shadow-2xl"
+          className="w-full h-[8vw] min-h-[40px] max-h-[120px] text-foreground fill-current -mb-1 block drop-shadow-2xl"
         >
           <defs>
             <linearGradient id="grad-1" x1="0" y1="0" x2="2278" y2="683" gradientUnits="userSpaceOnUse">

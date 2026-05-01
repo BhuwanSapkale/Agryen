@@ -17,7 +17,6 @@ const divisions = [
   { title: "Renewable", icon: <Sun className="w-12 h-12" />, desc: "Solar panels, battery storage, and consulting.", url: "/divisions/solar" },
   { title: "Construction", icon: <Building className="w-12 h-12" />, desc: "Infrastructure, project management, and renos.", url: "/divisions/construction" },
   { title: "Pharma", icon: <Pill className="w-12 h-12" />, desc: "Healthcare products and medicine distribution.", url: "/divisions/pharma" },
-  // Adding placeholder panels for the others requested to be in this strip
   { title: "How We Work", icon: <ArrowRight className="w-12 h-12" />, desc: "Our end-to-end multi-disciplinary approach.", url: "/how-we-work" },
   { title: "Projects", icon: <ArrowRight className="w-12 h-12" />, desc: "Explore our cross-industry portfolio.", url: "/projects" },
   { title: "Contact Us", icon: <ArrowRight className="w-12 h-12" />, desc: "Get in touch with our team.", url: "/contact" },
@@ -25,63 +24,48 @@ const divisions = [
 
 export function DivisionsHorizontal() {
   const wrapperRef = useRef<HTMLDivElement>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useGSAP(() => {
-    let pinWrap = scrollContainerRef.current;
-    if (!pinWrap || !wrapperRef.current) return;
-
-    let pinWrapWidth: number;
-    let horizontalScrollLength: number;
-
-    function refresh() {
-      if (pinWrap) {
-        pinWrapWidth = pinWrap.scrollWidth;
-        horizontalScrollLength = pinWrapWidth - window.innerWidth;
-      }
-    }
-
-    refresh();
+    const items = gsap.utils.toArray<HTMLElement>('.project-wrap');
     
-    gsap.to(pinWrap, {
-      scrollTrigger: {
-        scrub: true,
-        trigger: wrapperRef.current,
-        pin: wrapperRef.current,
-        pinSpacing: true,
-        start: "center center",
-        end: () => `+=${pinWrapWidth + 200}`,
-        invalidateOnRefresh: true,
-      },
-      x: () => -horizontalScrollLength!,
-      ease: "none"
+    items.forEach((item, i) => {
+      gsap.from(item, {
+        scrollTrigger: {
+          trigger: item,
+          start: "top 90%",
+          toggleActions: "play none none reverse"
+        },
+        x: i % 2 === 0 ? -100 : 100,
+        opacity: 0,
+        duration: 1,
+        ease: "power3.out"
+      });
     });
 
-    ScrollTrigger.addEventListener("refreshInit", refresh);
-
-    return () => {
-      ScrollTrigger.removeEventListener("refreshInit", refresh);
-    };
-
+    setTimeout(() => {
+      ScrollTrigger.refresh();
+    }, 100);
   }, { scope: wrapperRef });
 
   return (
-    <section ref={wrapperRef} id="portfolio" className="bg-background text-foreground overflow-hidden w-full h-screen flex flex-col justify-center relative">
-      <div className="absolute top-16 left-8 md:left-16 z-10">
-        <h2 className="text-4xl md:text-6xl font-bold mb-4 tracking-tighter shadow-sm w-max">Across The Board.</h2>
-      </div>
+    <section ref={wrapperRef} id="portfolio" className="bg-background text-foreground py-32 relative w-full border-b border-primary/20">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="mb-20 text-center">
+          <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-tighter uppercase inline-block border-b border-primary pb-4">Across The Board.</h2>
+        </div>
 
-      <div className="container-fluid w-full h-[60vh] flex items-center">
-        <div ref={scrollContainerRef} className="horiz-gallery-strip flex gap-8 px-8 md:px-32 h-full items-center w-max">
+        <div className="flex flex-col gap-12 items-center">
           {divisions.map((div, i) => (
-            <div key={i} className="project-wrap w-[80vw] md:w-[40vw] lg:w-[30vw] h-[50vh] flex-shrink-0 relative group rounded-3xl overflow-hidden bg-muted/20 border flex flex-col justify-between p-8 hover:bg-muted/40 transition-colors">
-              <div className="bg-primary/10 w-20 h-20 rounded-2xl flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
-                {div.icon}
+            <div key={i} className={`project-wrap w-full md:w-[85%] lg:w-[70%] flex flex-col md:flex-row items-center gap-8 bg-white border border-primary/20 rounded-3xl p-8 hover:border-primary/50 transition-colors shadow-2xl group ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
+              <div className="text-primary bg-black border border-primary/30 w-32 h-32 rounded-full flex flex-shrink-0 items-center justify-center group-hover:scale-110 transition-transform shadow-[0_0_20px_rgba(172,146,95,0.3)]">
+                <div className="scale-[1.5]">
+                  {div.icon}
+                </div>
               </div>
-              <div className="mt-auto">
-                <h3 className="text-3xl font-bold mb-3">{div.title}</h3>
-                <p className="text-xl text-muted-foreground mb-6 line-clamp-3">{div.desc}</p>
-                <a href={div.url} className="inline-flex items-center text-primary font-bold hover:underline text-lg uppercase tracking-wider">
+              <div className={`flex flex-col flex-1 text-center ${i % 2 !== 0 ? 'md:text-right md:items-end' : 'md:text-left md:items-start'}`}>
+                <h3 className="text-3xl md:text-4xl font-black mb-4 text-black uppercase tracking-widest">{div.title}</h3>
+                <p className="text-xl text-black/70 mb-8 leading-relaxed font-medium">{div.desc}</p>
+                <a href={div.url} className="inline-flex items-center justify-center text-black font-black bg-primary px-8 py-3 rounded-full hover:bg-black hover:text-white transition-colors text-lg uppercase tracking-wider shadow-[0_0_15px_rgba(172,146,95,0.4)]">
                   View More <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </a>
               </div>

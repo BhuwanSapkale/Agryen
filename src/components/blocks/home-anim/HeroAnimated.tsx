@@ -12,6 +12,7 @@ if (typeof window !== "undefined") {
 }
 
 const slides = [
+  { text: "AGRYEN", img: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2669" },
   { text: "Smart Home Automation", img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2672" },
   { text: "Software Solutions", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2672" },
   { text: "Renewable Energy", img: "https://images.unsplash.com/photo-1509391366360-12009a30f1aa?auto=format&fit=crop&q=80&w=2672" },
@@ -46,13 +47,17 @@ export function HeroAnimated() {
     gsap.set(images.slice(1), { yPercent: 15 });
 
     // Initial animation for the first slide immediately on page load
-    gsap.from(splitHeadings[0].chars, {
+    gsap.fromTo(splitHeadings[0].chars, {
       yPercent: 150,
       opacity: 0,
+    }, {
+      yPercent: 0,
+      opacity: 1,
       stagger: 0.05,
       ease: "power2.out",
       duration: 1,
-      delay: 0.2
+      delay: 0.2,
+      immediateRender: false
     });
     
     // Create an indestructible scrubbed timeline locked to ScrollTrigger natively
@@ -64,6 +69,7 @@ export function HeroAnimated() {
         scrub: 1, // Smoothing enabled natively through scroll position tracking
         pin: true,
         pinSpacing: true, // Prevents elements below from overlapping into the Hero
+        invalidateOnRefresh: true,
       }
     });
 
@@ -71,7 +77,7 @@ export function HeroAnimated() {
     sections.forEach((section, index) => {
       if (index === 0) return; // Skip slide zero as it's already visible
       
-      tl.set(section, { autoAlpha: 1, zIndex: 1 })
+      tl.to(section, { autoAlpha: 1, zIndex: 1, duration: 0.01 })
         .to(splitHeadings[index - 1].chars, { opacity: 0, yPercent: -100, duration: 0.8, ease: "power2.inOut", stagger: 0.01 }, "<") // Actively scrub old text out to prevent overlap bleed
         .to(images[index - 1], { yPercent: -15, duration: 1 }, "<") 
         .to([outerWrappers[index], innerWrappers[index]], { yPercent: 0, duration: 1, ease: "power2.inOut" }, "<") 
@@ -85,9 +91,8 @@ export function HeroAnimated() {
           stagger: 0.02,
           ease: "power2.out",
           duration: 0.8
-        }, "-=0.2"); 
-        
-      tl.set(sections[index - 1], { autoAlpha: 0 }); 
+        }, "-=0.2")
+        .to(sections[index - 1], { autoAlpha: 0, duration: 0.01 }); 
     });
 
   }, { scope: containerRef });
@@ -95,7 +100,7 @@ export function HeroAnimated() {
   return (
     <div ref={containerRef} className="relative w-full h-screen overflow-hidden bg-black text-white">
       {slides.map((slide, i) => (
-        <section key={i} className="hero-section absolute top-0 left-0 w-full h-full">
+        <section key={i} className="hero-section absolute top-0 left-0 w-full h-full" style={{ opacity: i === 0 ? 1 : 0, visibility: i === 0 ? 'visible' : 'hidden' }}>
           <div className="hero-outer w-full h-full overflow-hidden">
             <div className="hero-inner w-full h-full overflow-hidden">
               <div 

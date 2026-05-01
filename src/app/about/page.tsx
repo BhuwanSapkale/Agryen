@@ -51,36 +51,21 @@ export default function AboutPage() {
       ease: "back.out(1.7)"
     });
 
-    // Core Values Horizontal Scroll
-    const pinWrap = valuesScrollRef.current;
-    if (pinWrap && valuesRef.current) {
-      let pinWrapWidth: number;
-      let horizontalScrollLength: number;
-
-      function refresh() {
-        if (pinWrap) {
-          pinWrapWidth = pinWrap.scrollWidth;
-          horizontalScrollLength = pinWrapWidth - window.innerWidth;
-        }
-      }
-      refresh();
-      
-      gsap.to(pinWrap, {
+    // Core Values Vertical Slide-in
+    const coreValues = gsap.utils.toArray<HTMLElement>(".core-value-card");
+    coreValues.forEach((card, i) => {
+      gsap.from(card, {
         scrollTrigger: {
-          scrub: true,
-          trigger: valuesRef.current,
-          pin: valuesRef.current,
-          pinSpacing: true,
-          start: "center center",
-          end: () => `+=${pinWrapWidth + 500}`, // added 500px extra scroll padding so it doesn't collide
-          invalidateOnRefresh: true,
+          trigger: card,
+          start: "top 85%",
+          toggleActions: "play none none reverse"
         },
-        x: () => -horizontalScrollLength!,
-        ease: "none"
+        x: i % 2 === 0 ? -150 : 150,
+        opacity: 0,
+        duration: 0.8,
+        ease: "back.out(1.2)"
       });
-
-      ScrollTrigger.addEventListener("refreshInit", refresh);
-    }
+    });
 
     // Future Parallax
     gsap.to(".future-bg", {
@@ -169,25 +154,27 @@ export default function AboutPage() {
       </section>
 
       {/* 4. Core Values */}
-      <section ref={valuesRef} className="values-section bg-secondary text-white overflow-hidden w-full h-screen flex flex-col justify-center relative shadow-[inset_0_20px_50px_rgba(0,0,0,0.8)] border-b border-primary/20">
-        <div className="absolute top-16 left-8 md:left-16 z-10 hidden sm:block">
-          <h2 className="text-4xl md:text-5xl font-black mb-4 tracking-widest uppercase w-max text-white border-b border-primary pb-4">Core Values</h2>
-        </div>
+      <section ref={valuesRef} className="values-section bg-secondary text-white w-full py-32 relative shadow-[inset_0_20px_50px_rgba(0,0,0,0.8)] border-b border-primary/20">
+        <div className="max-w-7xl mx-auto px-4 md:px-8">
+          <div className="mb-20 text-center">
+            <h2 className="text-4xl md:text-6xl font-black mb-4 tracking-widest uppercase inline-block text-white border-b border-primary pb-4">Core Values</h2>
+          </div>
 
-        <div className="container-fluid w-full h-[60vh] flex items-center">
-          <div ref={valuesScrollRef} className="core-values-strip flex gap-8 px-8 md:px-32 h-full items-center w-max">
+          <div className="flex flex-col gap-12 items-center">
             {[
               { title: "Integrity", icon: <Shield className="w-12 h-12"/>, desc: "Honesty and transparency in absolutely all of our deals and processes." },
               { title: "Innovation", icon: <Zap className="w-12 h-12"/>, desc: "Constantly pushing tech boundaries to discover better solutions." },
               { title: "Quality", icon: <Trophy className="w-12 h-12"/>, desc: "Zero compromises on deliverables across any division." },
               { title: "Customer Focus", icon: <Globe className="w-12 h-12"/>, desc: "Your success is practically wired directly into our internal goals." },
             ].map((v, i) => (
-              <div key={i} className="w-[85vw] sm:w-[50vw] md:w-[40vw] lg:w-[30vw] h-[50vh] flex-shrink-0 relative group rounded-3xl overflow-hidden bg-white/95 border border-primary/20 flex flex-col justify-center text-center p-6 md:p-8 hover:border-primary/50 transition-colors shadow-2xl">
-                <div className="text-primary w-20 h-20 md:w-24 md:h-24 mx-auto bg-black border border-primary/30 rounded-full flex items-center justify-center mb-6 group-hover:scale-110 shadow-[0_0_15px_rgba(172,146,95,0.3)] transition-all duration-500">
+              <div key={i} className={`core-value-card w-full md:w-[80%] lg:w-[60%] flex flex-col md:flex-row items-center gap-8 bg-white/95 border border-primary/20 rounded-3xl p-8 hover:border-primary/50 transition-colors shadow-2xl group ${i % 2 !== 0 ? 'md:flex-row-reverse' : ''}`}>
+                <div className="text-primary w-24 h-24 mx-auto md:mx-0 flex-shrink-0 bg-black border border-primary/30 rounded-full flex items-center justify-center group-hover:scale-110 shadow-[0_0_15px_rgba(172,146,95,0.3)] transition-all duration-500">
                   {v.icon}
                 </div>
-                <h3 className="text-2xl md:text-3xl font-black mb-4 text-black uppercase tracking-widest">{v.title}</h3>
-                <p className="text-black/70 text-lg md:text-xl font-medium">{v.desc}</p>
+                <div className={`flex flex-col flex-1 text-center ${i % 2 !== 0 ? 'md:text-right md:items-end' : 'md:text-left md:items-start'}`}>
+                  <h3 className="text-2xl md:text-4xl font-black mb-4 text-black uppercase tracking-widest">{v.title}</h3>
+                  <p className="text-black/70 text-lg md:text-xl font-medium">{v.desc}</p>
+                </div>
               </div>
             ))}
           </div>

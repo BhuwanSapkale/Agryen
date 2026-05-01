@@ -104,10 +104,10 @@
     -moz-osx-font-smoothing: grayscale;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground overflow-x-hidden;
   }
   html {
-    @apply font-sans bg-background text-foreground;
+    @apply font-sans bg-background text-foreground overflow-x-hidden;
   }
   
   /* Missing GSAP SplitText utility class to cleanly clip scrolling font */

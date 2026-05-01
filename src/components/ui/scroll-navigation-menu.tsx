@@ -172,41 +172,42 @@ export const Component: React.FC<ScrollNavbarProps> = ({
               className="fixed inset-0 bg-black/90 backdrop-blur-xl z-40"
               onClick={toggleMenu}
             />
-            <motion.div
-              variants={menuVariants}
-              initial="closed"
-              animate="open"
-              exit="closed"
-              className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-11/12 max-w-md max-h-[90vh] overflow-y-auto"
-            >
-              <div className="relative bg-secondary border border-primary/30 rounded-3xl p-10 shadow-[0_0_50px_rgba(172,146,95,0.2)]">
-                <motion.button
-                  onClick={toggleMenu}
-                  className="absolute top-6 right-6 p-2 text-white/50 hover:text-primary rounded-full hover:bg-white/5"
-                  whileHover={{ scale: 1.1, rotate: 90 }}
-                  whileTap={{ scale: 0.9 }}
-                >
-                  <X className="w-6 h-6" />
-                </motion.button>
-                <div className="space-y-4 mt-8">
-                  {menuItems.map((item) => (
-                    <motion.div key={item.id} variants={itemVariants} whileHover={{ scale: 1.05, x: 10 }} whileTap={{ scale: 0.95 }}>
-                      <a href={item.url} className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/5 transition-colors group border border-transparent hover:border-primary/20 text-white">
-                        <motion.div className="text-primary" whileHover={{ rotate: 360 }} transition={{ duration: 0.3 }}>
-                          {item.icon}
-                        </motion.div>
-                        <span className="text-xl font-bold uppercase tracking-widest text-white/80 group-hover:text-primary">{item.title}</span>
+            <div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
+              <motion.div
+                variants={menuVariants}
+                initial="closed"
+                animate="open"
+                exit="closed"
+                className="w-full max-w-md max-h-full overflow-y-auto bg-secondary border border-primary/30 rounded-[2rem] p-8 shadow-[0_0_80px_rgba(0,0,0,0.8)] pointer-events-auto [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"
+              >
+                <div className="relative">
+                  <div className="flex justify-end mb-4">
+                    <motion.button
+                      onClick={toggleMenu}
+                      className="p-2 text-white/50 hover:text-primary rounded-full hover:bg-white/5"
+                      whileHover={{ scale: 1.1, rotate: 90 }}
+                      whileTap={{ scale: 0.9 }}
+                    >
+                      <X className="w-8 h-8" />
+                    </motion.button>
+                  </div>
+                  <div className="space-y-2">
+                    {menuItems.map((item) => (
+                      <motion.div key={item.id} variants={itemVariants} whileHover={{ scale: 1.02, x: 5 }} whileTap={{ scale: 0.98 }}>
+                        <a href={item.url} className="flex items-center space-x-4 p-4 rounded-xl hover:bg-white/5 transition-colors group border border-transparent hover:border-primary/20 text-white">
+                          <span className="text-xl font-black uppercase tracking-[0.2em] text-white/80 group-hover:text-primary">{item.title}</span>
+                        </a>
+                      </motion.div>
+                    ))}
+                    <motion.div variants={itemVariants} className="pt-6">
+                      <a href="/contact" className="flex items-center space-x-4 p-6 rounded-2xl bg-primary text-black font-black hover:bg-white transition-all group justify-center shadow-[0_10px_30px_rgba(172,146,95,0.4)]">
+                        <span className="text-xl tracking-[0.2em] uppercase">Contact Us</span>
                       </a>
                     </motion.div>
-                  ))}
-                  <motion.div variants={itemVariants} whileHover={{ scale: 1.05, x: 10 }} whileTap={{ scale: 0.95 }} className="pt-6">
-                    <a href="/contact" className="flex items-center space-x-4 p-6 rounded-2xl bg-primary text-black font-black hover:bg-primary/80 transition-colors group mt-4 justify-center shadow-[0_0_20px_rgba(172,146,95,0.4)]">
-                      <span className="text-xl tracking-widest uppercase">Contact Us</span>
-                    </a>
-                  </motion.div>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
+              </motion.div>
+            </div>
           </>
         )}
       </AnimatePresence>
