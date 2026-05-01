@@ -113,6 +113,10 @@
   /* Missing GSAP SplitText utility class to cleanly clip scrolling font */
   .clip-text {
     overflow: hidden;
+    padding-top: 0.2em;
+    padding-bottom: 0.2em;
+    margin-top: -0.2em;
+    margin-bottom: -0.2em;
   }
   
   /* Hides default browser scrollbar for a seamless GSAP experience */

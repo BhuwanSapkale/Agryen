@@ -113,7 +113,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-xl uppercase tracking-wider text-primary">Headquarters</h3>
-                    <p className="text-black/70 text-lg font-medium">123 Innovation Drive, Tech City</p>
+                    <p className="text-black/70 text-lg font-medium">amravati maharashtra</p>
                   </div>
                 </div>
                 <div className="contact-info-block flex items-center p-6 rounded-2xl bg-secondary/5 border border-primary/10 hover:bg-secondary/10 transition-colors group">
@@ -122,7 +122,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-bold text-xl uppercase tracking-wider text-primary">Phone</h3>
-                    <p className="text-black/70 text-lg font-medium">+1 (555) 123-4567</p>
+                    <p className="text-black/70 text-lg font-medium">+91 75888 76025</p>
                   </div>
                 </div>
                 <div className="contact-info-block flex items-center p-6 rounded-2xl bg-secondary/5 border border-primary/10 hover:bg-secondary/10 transition-colors group">

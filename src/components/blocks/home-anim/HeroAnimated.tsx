@@ -6,13 +6,19 @@ import { Observer } from "gsap/Observer";
 import { SplitText } from "gsap/SplitText";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
+import Image from "next/image";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(Observer, SplitText, ScrollTrigger);
 }
 
 const slides = [
-  { text: "AGRYEN", img: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2669" },
+  { 
+    text: "AGRYEN", 
+    subtext: "लोकजीवनस्य उन्नतिः", 
+    logo: "/chatgpt-logo-transparent.png",
+    img: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&q=80&w=2669" 
+  },
   { text: "Smart Home Automation", img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2672" },
   { text: "Software Solutions", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2672" },
   { text: "Renewable Energy", img: "https://images.unsplash.com/photo-1509391366360-12009a30f1aa?auto=format&fit=crop&q=80&w=2672" },
@@ -29,12 +35,18 @@ export function HeroAnimated() {
     let headings = gsap.utils.toArray<HTMLElement>(".hero-heading");
     let outerWrappers = gsap.utils.toArray<HTMLElement>(".hero-outer");
     let innerWrappers = gsap.utils.toArray<HTMLElement>(".hero-inner");
+    let logos = gsap.utils.toArray<HTMLElement>(".hero-logo");
+    let subtexts = gsap.utils.toArray<HTMLElement>(".hero-subtext");
     
-    // Split Headings, utilizing the .clip-text class we added to globals.css
+    // Split Headings
     let splitHeadings = headings.map(heading => {
-      // make sure text is crisp white for cinematic effect
       gsap.set(heading, { color: "white" });
       return new SplitText(heading, { type: "chars,words,lines", linesClass: "clip-text" });
+    });
+
+    // Split Subtexts if they exist
+    let splitSubtexts = subtexts.map(subtext => {
+      return new SplitText(subtext, { type: "chars,words,lines", linesClass: "clip-text" });
     });
 
     // Make all sections invisible except the first one
@@ -47,7 +59,9 @@ export function HeroAnimated() {
     gsap.set(images.slice(1), { yPercent: 15 });
 
     // Initial animation for the first slide immediately on page load
-    gsap.fromTo(splitHeadings[0].chars, {
+    const introTl = gsap.timeline();
+
+    introTl.fromTo(splitHeadings[0].chars, {
       yPercent: 150,
       opacity: 0,
     }, {
@@ -56,9 +70,35 @@ export function HeroAnimated() {
       stagger: 0.05,
       ease: "power2.out",
       duration: 1,
-      delay: 0.2,
       immediateRender: false
     });
+    
+    if (logos[0]) {
+      introTl.fromTo(logos[0], {
+        yPercent: 150,
+        opacity: 0,
+      }, {
+        yPercent: 0,
+        opacity: 1,
+        ease: "power2.out",
+        duration: 1,
+        immediateRender: false
+      }, "<");
+    }
+
+    if (splitSubtexts[0]) {
+      introTl.fromTo(splitSubtexts[0].chars, {
+        yPercent: 150,
+        opacity: 0,
+      }, {
+        yPercent: 0,
+        opacity: 1,
+        stagger: 0.05,
+        ease: "power2.out",
+        duration: 1,
+        immediateRender: false
+      }, "<");
+    }
     
     // Create an indestructible scrubbed timeline locked to ScrollTrigger natively
     const tl = gsap.timeline({
@@ -66,9 +106,9 @@ export function HeroAnimated() {
         trigger: containerRef.current,
         start: "top top",
         end: "+=4000",
-        scrub: 1, // Smoothing enabled natively through scroll position tracking
+        scrub: 1,
         pin: true,
-        pinSpacing: true, // Prevents elements below from overlapping into the Hero
+        pinSpacing: true,
         invalidateOnRefresh: true,
       }
     });
@@ -78,9 +118,18 @@ export function HeroAnimated() {
       if (index === 0) return; // Skip slide zero as it's already visible
       
       tl.to(section, { autoAlpha: 1, zIndex: 1, duration: 0.01 })
-        .to(splitHeadings[index - 1].chars, { opacity: 0, yPercent: -100, duration: 0.8, ease: "power2.inOut", stagger: 0.01 }, "<") // Actively scrub old text out to prevent overlap bleed
-        .to(images[index - 1], { yPercent: -15, duration: 1 }, "<") 
-        .to([outerWrappers[index], innerWrappers[index]], { yPercent: 0, duration: 1, ease: "power2.inOut" }, "<") 
+        .to(splitHeadings[index - 1].chars, { opacity: 0, yPercent: -100, duration: 0.8, ease: "power2.inOut", stagger: 0.01 }, "<")
+        .to(images[index - 1], { yPercent: -15, duration: 1 }, "<");
+      
+      // Animate out logo and subtext of previous slide if they exist
+      if (logos[index - 1]) {
+        tl.to(logos[index - 1], { opacity: 0, yPercent: -100, duration: 0.8, ease: "power2.inOut" }, "<");
+      }
+      if (splitSubtexts[index - 1]) {
+        tl.to(splitSubtexts[index - 1].chars, { opacity: 0, yPercent: -100, duration: 0.8, ease: "power2.inOut", stagger: 0.01 }, "<");
+      }
+
+      tl.to([outerWrappers[index], innerWrappers[index]], { yPercent: 0, duration: 1, ease: "power2.inOut" }, "<") 
         .to(images[index], { yPercent: 0, duration: 1 }, "<") 
         .fromTo(splitHeadings[index].chars, {
           yPercent: 150,
@@ -104,15 +153,37 @@ export function HeroAnimated() {
           <div className="hero-outer w-full h-full overflow-hidden">
             <div className="hero-inner w-full h-full overflow-hidden">
               <div 
-                className={`hero-bg w-full h-full bg-cover bg-center flex items-center justify-center relative`}
+                className={`hero-bg w-full h-full bg-cover bg-center flex flex-col items-center justify-center relative`}
                 style={{ backgroundImage: `url(${slide.img})` }}
               >
                 {/* Dark overlay for contrast */}
                 <div className="absolute inset-0 bg-black/40"></div>
                 
-                <h2 className="hero-heading text-[2.2rem] md:text-6xl lg:text-8xl font-black uppercase text-center max-w-6xl tracking-tight z-10 px-6 leading-[1.1] text-white/90 drop-shadow-2xl">
-                  {slide.text}
-                </h2>
+                <div className="z-10 flex flex-col items-center text-center px-6">
+                  {slide.logo && (
+                    <div className="overflow-hidden mb-8">
+                      <div className="hero-logo">
+                        <Image 
+                          src={slide.logo} 
+                          alt="Agryen Logo" 
+                          width={240} 
+                          height={240} 
+                          className="w-32 md:w-48 lg:w-56 h-auto drop-shadow-2xl"
+                        />
+                      </div>
+                    </div>
+                  )}
+                  
+                  <h2 className="hero-heading text-[2.2rem] md:text-6xl lg:text-8xl font-black uppercase tracking-tight leading-[1.1] text-white/90 drop-shadow-2xl">
+                    {slide.text}
+                  </h2>
+
+                  {slide.subtext && (
+                    <p className="hero-subtext mt-6 text-xl md:text-3xl lg:text-4xl font-medium tracking-widest text-primary/90 drop-shadow-lg whitespace-nowrap">
+                      {slide.subtext}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
           </div>
@@ -121,3 +192,4 @@ export function HeroAnimated() {
     </div>
   );
 }
+

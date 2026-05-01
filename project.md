@@ -6,38 +6,55 @@ This document provides a comprehensive technical overview of the AGRYEN website,
 
 ## 1. Core Tech Stack & Dependencies
 
-- **Next.js 16.2.4 (App Router)**
-- **GSAP (GreenSock Animation Platform) 3.15.0**
-  - ScrollTrigger, SplitText, MorphSVG, Flip, Observer
-- **Tailwind CSS 4**
-- **Lenis 1.3.23** (Smooth Scrolling)
+- **Framework**: Next.js 16.2.4 (App Router)
+- **Animation**: GSAP (GreenSock Animation Platform) 3.15.0
+  - Plugins: ScrollTrigger, SplitText, MorphSVG, Flip, Observer
+- **Styling**: Tailwind CSS 4
+- **Smooth Scroll**: Lenis 1.3.23 (Inertial Scrolling)
+- **Icons**: Lucide React
 
 ---
 
 ## 2. Key Components & Animations
 
 ### **A. Hero Section (`HeroAnimated.tsx`)**
-- **Cinematic Reveal**: Uses parallax reveal with `outerWrapper` and `innerWrapper`.
-- **FOUC Fix**: Implements inline styles and `gsap.fromTo` with `immediateRender: false` for perfect initial rendering.
-- **Title Slide**: Features "AGRYEN" as the first cinematic entry.
+- **Cinematic Reveal**: Uses a dual-wrapper parallax system (`hero-outer` and `hero-inner`) to create a window-reveal effect.
+- **FOUC Protection**: Implements `immediateRender: false` on GSAP timelines and inline `style` visibility guards to ensure zero flicker on initial load.
+- **Content**: Features a multi-slide cinematic intro starting with the "AGRYEN" brand name, a premium gold logo icon, and the Sanskrit subtext "लोकजीवनस्य उन्नतिः".
+- **Dynamic Text**: Uses `SplitText` for character-by-character reveals of both the main brand name and the Sanskrit subtext, synchronized with scroll position.
 
-### **B. Across The Board (`DivisionsHorizontal.tsx`)**
-- **Layout**: Vertical alternating cards with light-themed styling (white bg, black text).
-- **Animations**: Alternating left-to-right and right-to-left slide-ins using `ScrollTrigger`.
-- **Responsive**: Stacks into a clean vertical list on mobile devices.
+### **B. Across The Board & Core Values**
+- **Architecture**: Transitions from horizontal scrolling to a **Vertical Alternating Layout**.
+- **Visuals**: Light-themed cards (White background, Black text) for maximum readability against the site's dark core.
+- **Entrance**: Implements alternating `x` offsets (Left-Right-Left) triggered by `ScrollTrigger` as the user scrolls.
 
-### **C. Core Values (`about/page.tsx`)**
-- **Layout**: Similar to the Divisions section, using vertical alternating cards with light-themed backgrounds.
-- **Animations**: Snap-in entrance effects from alternating sides for a dynamic reading experience.
+### **C. Process Timeline (`HowWeWorkPage`)**
+- **Animation Logic**: Uses a **Triggered Animation System** instead of a scrub.
+  - **Start**: `top 95%` (Instant feedback as the card enters the viewport).
+  - **Ease**: `power2.out` for a snappy, responsive feel.
+- **Performance**: Removed `bg-fixed` and added `will-change` hints to cards to ensure 60fps scrolling on mobile devices.
+- **Mobile Layout**: Responsive stacking where process numbers sit vertically above the description text.
 
-### **D. Process Timeline (`HowWeWorkPage`)**
-- **Performance**: Removed `bg-fixed` to eliminate mobile scroll jank.
-- **Cinematic Feel**: Implemented `scrub: 1` on card animations for perfect scroll-synchronization.
-- **Trigger**: Starts at `top bottom` for immediate entry.
-- **Mobile Layout**: Responsive stacking of process steps for vertical readability.
+### **D. Scroll Navigation Menu (`scroll-navigation-menu.tsx`)**
+- **Mobile UX**: 
+  - **Centered Modal**: A floating card-style menu that is vertically centered using `flex items-center`.
+  - **Adaptive Height**: Uses `max-h-[80vh]` with internal `overflow-y-auto` to prevent cutoff on small screens.
+  - **Cutoff Prevention**: Implements significant internal bottom padding (`pb-32`) to ensure all links are scrollable and visible.
+  - **UI Clarity**: Close button (`X`) is placed in a dedicated header row to avoid overlap with the "Home" link.
+- **Behavior**: An adaptive navbar that morphs into a floating hamburger button upon scrolling 100px.
 
-### **E. Navigation Menu (`scroll-navigation-menu.tsx`)**
-- **Mobile UX**: Hidden scrollbars on the top-down menu overlay for a cleaner, premium aesthetic.
-- **Behavior**: Adaptive navbar that switches to a floating hamburger on scroll.
-- **Mobile Lock**: `overflow-x: hidden` enforced globally to prevent animation-induced scroll breakage.
-- **Layout Stability**: Centralized `ScrollTrigger.refresh()` logic on route changes.
+---
+
+## 3. Global Optimizations
+
+- **Mobile Overflow Lock**: `overflow-x: hidden` is enforced globally on `html` and `body` to prevent horizontal scrollbars during entrance animations.
+- **Responsive Buttons**: Global call-to-action buttons use `flex-col md:flex-row` to stack vertically on mobile while maintaining side-by-side alignment on desktop.
+- **Layout Stability**: Centralized `ScrollTrigger.refresh()` logic with a `500ms` delay on hydration to account for Next.js layout shifts.
+
+---
+
+## 4. Contact & Global Identity
+
+- **Headquarters**: Updated to Amravati, Maharashtra, reflecting the company's regional hub.
+- **Visual Identity**: Integrated a custom-generated minimalist gold logo icon across the hero section to reinforce the premium brand aesthetic.
+- **Contact Details**: Global reach maintained via `contact@agryen.com` and a dedicated support line at `+91 75888 76025`.
