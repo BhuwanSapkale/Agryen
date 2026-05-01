@@ -58,47 +58,6 @@ export function HeroAnimated() {
     gsap.set(innerWrappers.slice(1), { yPercent: -100 });
     gsap.set(images.slice(1), { yPercent: 15 });
 
-    // Initial animation for the first slide immediately on page load
-    const introTl = gsap.timeline();
-
-    introTl.fromTo(splitHeadings[0].chars, {
-      yPercent: 150,
-      opacity: 0,
-    }, {
-      yPercent: 0,
-      opacity: 1,
-      stagger: 0.05,
-      ease: "power2.out",
-      duration: 1,
-      immediateRender: false
-    });
-    
-    if (logos[0]) {
-      introTl.fromTo(logos[0], {
-        yPercent: 150,
-        opacity: 0,
-      }, {
-        yPercent: 0,
-        opacity: 1,
-        ease: "power2.out",
-        duration: 1,
-        immediateRender: false
-      }, "<");
-    }
-
-    if (splitSubtexts[0]) {
-      introTl.fromTo(splitSubtexts[0].chars, {
-        yPercent: 150,
-        opacity: 0,
-      }, {
-        yPercent: 0,
-        opacity: 1,
-        stagger: 0.05,
-        ease: "power2.out",
-        duration: 1,
-        immediateRender: false
-      }, "<");
-    }
     
     // Create an indestructible scrubbed timeline locked to ScrollTrigger natively
     const tl = gsap.timeline({
