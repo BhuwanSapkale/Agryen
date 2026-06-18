@@ -5,7 +5,8 @@ export default function SolarDivision() {
     <DivisionTemplate 
       title="Solar & Renewable Energy"
       subtitle="Powering the future with sustainable, clean energy."
-      image="https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=3000&auto=format&fit=crop"
+      image="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=3000&auto=format&fit=crop"
+      imagePosition="object-bottom"
       description="Energy independence is not just an environmental imperative; it is an economic advantage. Our Solar & Renewable Energy division manages end-to-end solar installations for both residential and commercial clients. We handle everything from site assessment and energy consulting to long-term battery storage solutions."
       services={[
         "Solar Panel Installation",

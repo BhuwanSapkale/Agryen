@@ -15,7 +15,7 @@ export default function PartnerPage() {
       <section className="relative w-full h-[60vh] overflow-hidden bg-black text-white flex items-center justify-center border-b border-primary/20">
         <div 
           className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1556761175-5973dc0f32d7?q=80&w=2670')` }}
+          style={{ backgroundImage: `url('https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2670&auto=format&fit=crop')` }}
         />
         <div className="absolute inset-0 bg-black/40 pointer-events-none" />
         

@@ -128,13 +128,13 @@ export default function DivisionsPage() {
         {[
           { title: "Smart Home Automation", img: "https://images.unsplash.com/photo-1558002038-1055907df827?auto=format&fit=crop&q=80&w=2672", desc: "Experience the ultimate in intelligent living with our cutting-edge automation systems.", url: "/divisions/smart-home" },
           { title: "Software & Digital Solutions", img: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=2672", desc: "Building the future of digital infrastructure with scalable, secure software solutions.", url: "#" },
-          { title: "Solar & Renewable Energy", img: "https://images.unsplash.com/photo-1509391366360-12009a30f1aa?auto=format&fit=crop&q=80&w=2672", desc: "Powering the world sustainably through advanced solar technology and energy storage.", url: "#" },
+          { title: "Solar & Renewable Energy", img: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?auto=format&fit=crop&q=80&w=2672", desc: "Powering the world sustainably through advanced solar technology and energy storage.", url: "#", position: "object-bottom" },
           { title: "Construction & Infrastructure", img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2672", desc: "Redefining the modern landscape with robust, high-end construction and architectural excellence.", url: "#" },
           { title: "Pharmaceuticals", img: "https://images.unsplash.com/photo-1530497610245-94d3c16cda28?auto=format&fit=crop&q=80&w=2672", desc: "Advancing global health through innovative research and high-quality pharmaceutical manufacturing.", url: "#" }
         ].map((div, i) => (
           <div key={i} className="division-card group relative w-full h-[80vh] flex items-center justify-center overflow-hidden border-y border-white/5">
             <div className="absolute inset-0 transition-transform duration-1000 group-hover:scale-110">
-               <img src={div.img} alt={div.title} className="w-full h-full object-cover opacity-80" />
+               <img src={div.img} alt={div.title} className={`w-full h-full object-cover opacity-80 ${div.position || 'object-center'}`} />
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent"></div>
             

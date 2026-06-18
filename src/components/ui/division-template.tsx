@@ -7,6 +7,7 @@ interface DivisionTemplateProps {
   title: string;
   subtitle: string;
   image: string;
+  imagePosition?: string;
   description: string;
   services: string[];
   projects: { title: string; desc: string }[];
@@ -17,6 +18,7 @@ export function DivisionTemplate({
   title,
   subtitle,
   image,
+  imagePosition,
   description,
   services,
   projects,
@@ -28,7 +30,7 @@ export function DivisionTemplate({
       <section className="relative py-40 bg-black flex items-center justify-center overflow-hidden border-b border-primary/20">
         <img 
           src={image} 
-          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          className={`absolute inset-0 w-full h-full object-cover opacity-30 ${imagePosition || 'object-center'}`}
           alt={title}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
